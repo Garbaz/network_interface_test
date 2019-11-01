@@ -1,12 +1,11 @@
-class Player extends Actor {
-  
-  Player(PVector pos_) {
+class Enemy extends Actor {
+  Enemy(PVector pos_) {
     super(pos_);
   }
   
   void show() {
-    fill(#2270ff);
-    circle(pos.x, pos.y, 2*RADIUS);
+    fill(#3FBC2F);
+    circle(pos.x, pos.y, RADIUS);
   }
   
   String statusString() {

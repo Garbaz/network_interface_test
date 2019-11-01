@@ -10,14 +10,13 @@ ArrayList<Prop> props = new ArrayList<Prop>();
 
 Player player;
 
-HashMap<String, Player> network_players;
+HashMap<String, NetworkObject> network_objects;
 
 PVector spawn_point = new PVector(100, 100);
 
 final PVector UNKNOWN_POSITION = new PVector(1<<20, 1<<20);
 
-
-final String NETWORK_IP = "127.0.0.1";
+final String NETWORK_IP = "192.168.2.101";
 final int NETWORK_PORT = 1729;
 final int UPDATE_INTERVALL = 62;
 final int CLEANUP_INTERVALL = 1000;
@@ -51,7 +50,7 @@ void setup() {
   drawables.add(player);
 
   network_id = str(int(random(1, 1<<20)));
-  network_players = new HashMap<String, Player>();
+  network_objects = new HashMap<String, NetworkObject>();
   network_players_last_update = new IntDict();
 }
 
@@ -65,8 +64,8 @@ void draw() {
 
   player.update(dt);
   
-  for(Player p : network_players.values()) {
-    p.update(dt);
+  for(NetworkObject p : network_objects.values()) {
+    if(p instanceof Actor) ((Actor)p).update(dt);
   }
 
 /*
@@ -181,13 +180,13 @@ void removeProp(Prop p) {
 }
 
 void addPlayer(String id, Player p) {
-  network_players.put(id, p);
+  network_objects.put(id, p);
   drawables.add(p);
 }
 
 void removePlayer(String id) {
-  drawables.remove(network_players.get(id));
-  network_players.remove(id);
+  drawables.remove(network_objects.get(id));
+  network_objects.remove(id);
 }
 
 void removeAllProps(java.util.Collection c) {

@@ -51,10 +51,10 @@ void handleStatus(String str) {
     
     if (int(id) != 0 && !id.equals(network_id)) {
       network_players_last_update.set(id, millis());
-      if (!network_players.containsKey(id)) {
+      if (!network_objects.containsKey(id)) {
         addPlayer(id, new Player(UNKNOWN_POSITION));
       }
-      network_players.get(id).setFromStatusString(status);
+      network_objects.get(id).fromStatusString(status);
       //println(network_players.get(id).statusString());
     }
   }
@@ -67,7 +67,7 @@ void network_player_cleanup() {
     for (String id : network_players_last_update.keys()) {
       if (time-network_players_last_update.get(id) > CLEANUP_INTERVALL) {
         network_players_last_update.remove(id);
-        network_players.remove(id);
+        network_objects.remove(id);
       }
     }
   }

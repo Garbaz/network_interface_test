@@ -1,4 +1,4 @@
-class Actor implements Drawable {
+class Actor implements Drawable, NetworkObject {
   final int COLLISION_PASSES = 2;
 
   final float RADIUS = PLAYER_RADIUS;
@@ -22,6 +22,12 @@ class Actor implements Drawable {
   }
 
   void show() {
+    pushStyle();
+    fill(#EE08FF);
+    textAlign(CENTER,CENTER);
+    textSize(18);
+    text("Missing\nshow()", pos.x, pos.y);
+    popStyle();
   }
 
   PVector collide(Prop p) {
@@ -67,7 +73,7 @@ class Actor implements Drawable {
            "VEL " + vel.x + " " + vel.y;
   }
 
-  void setFromStatusString(String status) {
+  void fromStatusString(String status) {
     for (String s : status.split("\n")) {
       String[] sp = s.split("\\s+");
       if (sp[0].equals("POS")) {
